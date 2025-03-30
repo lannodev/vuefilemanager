@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  mysql:
+    image: mysql:latest
+    ports:
+      - '3306:3306'
+    container_name: mysql_container
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: vuefilemanager
+      MYSQL_USER: vuefilemanager
+      MYSQL_PASSWORD: vuefilemanager
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
