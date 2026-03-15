@@ -324,7 +324,7 @@ class TeamManagementTest extends TestCase
                 'permission' => 'can-view',
             ]);
 
-        Notification::assertSentTimes(1, InvitationIntoTeamFolder::class);
+        Notification::assertSentTimes(InvitationIntoTeamFolder::class, 1);
     }
 
     /**
@@ -503,7 +503,7 @@ class TeamManagementTest extends TestCase
                 'permission' => 'can-edit',
             ]);
 
-        Notification::assertSentTimes(0, InvitationIntoTeamFolder::class);
+        Notification::assertSentTimes(InvitationIntoTeamFolder::class, 0);
     }
 
     /**

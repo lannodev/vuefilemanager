@@ -86,7 +86,7 @@ class TeamsTest extends TestCase
                 'email' => 'jane@external.com',
             ]);
 
-        Notification::assertSentTimes(2, InvitationIntoTeamFolder::class);
+        Notification::assertSentTimes(InvitationIntoTeamFolder::class, 2);
     }
 
     /**
@@ -163,7 +163,7 @@ class TeamsTest extends TestCase
             'team_folder' => 1,
         ]);
 
-        Notification::assertSentTimes(2, InvitationIntoTeamFolder::class);
+        Notification::assertSentTimes(InvitationIntoTeamFolder::class, 2);
     }
 
     /**

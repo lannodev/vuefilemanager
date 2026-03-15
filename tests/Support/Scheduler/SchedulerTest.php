@@ -105,8 +105,6 @@ class SchedulerTest extends TestCase
     {
         Storage::fake('local');
 
-        $this->travel(-26)->hours();
-
         $file = UploadedFile::fake()
             ->create('fake-file.zip', 2000, 'application/zip');
 
@@ -114,6 +112,11 @@ class SchedulerTest extends TestCase
             ->each(function ($folder) use ($file) {
                 Storage::disk('local')->putFileAs($folder, $file, 'fake-file.zip');
             });
+
+        touch(
+            Storage::disk('local')->path('chunks/fake-file.zip'),
+            now()->subHours(26)->timestamp
+        );
 
         resolve(DeleteFailedFilesAction::class)();
 

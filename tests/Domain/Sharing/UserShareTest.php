@@ -190,7 +190,7 @@ class UserShareTest extends TestCase
                 ],
             ])->assertStatus(201);
 
-        Notification::assertSentTimes(2, SharedSendViaEmail::class);
+        Notification::assertSentTimes(SharedSendViaEmail::class, 2);
     }
 
     /**
@@ -221,7 +221,7 @@ class UserShareTest extends TestCase
             ],
         ])->assertStatus(200);
 
-        Notification::assertSentTimes(2, SharedSendViaEmail::class);
+        Notification::assertSentTimes(SharedSendViaEmail::class, 2);
     }
 
     /**

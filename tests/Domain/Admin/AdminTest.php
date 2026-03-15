@@ -146,7 +146,7 @@ class AdminTest extends TestCase
             ->postJson("/api/admin/users/$user->id/reset-password")
             ->assertStatus(200);
 
-        Notification::assertSentTimes(1, ResetPassword::class);
+        Notification::assertSentTimes(ResetPassword::class, 1);
     }
 
     /**

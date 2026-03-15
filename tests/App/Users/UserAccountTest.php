@@ -255,6 +255,6 @@ class UserAccountTest extends TestCase
         ])
             ->assertStatus(200);
 
-        Notification::assertSentTimes(1, VerifyEmail::class);
+        Notification::assertSentTimes(VerifyEmail::class, 1);
     }
 }
