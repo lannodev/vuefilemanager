@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests\Domain\Teams;
 
 use Str;
@@ -323,7 +324,7 @@ class TeamManagementTest extends TestCase
                 'permission' => 'can-view',
             ]);
 
-        Notification::assertTimesSent(1, InvitationIntoTeamFolder::class);
+        Notification::assertSentTimes(1, InvitationIntoTeamFolder::class);
     }
 
     /**
@@ -502,7 +503,7 @@ class TeamManagementTest extends TestCase
                 'permission' => 'can-edit',
             ]);
 
-        Notification::assertTimesSent(0, InvitationIntoTeamFolder::class);
+        Notification::assertSentTimes(0, InvitationIntoTeamFolder::class);
     }
 
     /**

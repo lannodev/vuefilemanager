@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Users\Models;
 
 use Illuminate\Support\Str;
@@ -6,6 +7,7 @@ use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use TeamTNT\TNTSearch\Indexer\TNTIndexer;
+use TeamTNT\TNTSearch\TNTSearch;
 use Database\Factories\UserSettingFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -81,11 +83,13 @@ class UserSetting extends Model
             'UTF-8'
         );
 
-        $nameNgrams = (new TNTIndexer)
-            ->buildTrigrams(implode(', ', [$name]));
+        $tnt = new TNTSearch();
+        $tnt->loadConfig(config('scout.tntsearch'));
 
-        $emailNgrams = (new TNTIndexer)
-            ->buildTrigrams(implode(', ', [$this->user->email]));
+        $indexer = new TNTIndexer($tnt->engine);
+
+        $nameNgrams = $indexer->buildTrigrams(implode(', ', [$name]));
+        $emailNgrams = $indexer->buildTrigrams(implode(', ', [$this->user->email]));
 
         return [
             'id'          => $this->id,

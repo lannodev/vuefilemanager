@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests\App\Restrictions;
 
 use Illuminate\Http\UploadedFile;

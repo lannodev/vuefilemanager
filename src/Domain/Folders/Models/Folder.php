@@ -1,4 +1,5 @@
 <?php
+
 namespace Domain\Folders\Models;
 
 use App\Users\Models\User;
@@ -17,6 +18,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use TeamTNT\TNTSearch\TNTSearch;
 
 /**
  * @method static whereUserId(int|string|null $id)
@@ -218,8 +220,11 @@ class Folder extends Model
             'UTF-8'
         );
 
-        $trigram = (new TNTIndexer)
-            ->buildTrigrams(implode(', ', [$name]));
+        $tnt = new TNTSearch();
+        $tnt->loadConfig(config('scout.tntsearch'));
+
+        $indexer = new TNTIndexer($tnt->engine);
+        $trigram = $indexer->buildTrigrams(implode(', ', [$name]));
 
         return [
             'id'         => $this->id,
@@ -241,15 +246,15 @@ class Folder extends Model
             if ($item->isForceDeleting()) {
                 $item
                     ->trashedChildren()
-                    ->each(fn ($folder) => $folder->forceDelete());
+                    ->each(fn($folder) => $folder->forceDelete());
             } else {
                 $item
                     ->children()
-                    ->each(fn ($folder) => $folder->delete());
+                    ->each(fn($folder) => $folder->delete());
 
                 $item
                     ->files()
-                    ->each(fn ($file) => $file->delete());
+                    ->each(fn($file) => $file->delete());
             }
         });
 
@@ -257,10 +262,10 @@ class Folder extends Model
         static::restoring(function ($item) {
             $item
                 ->trashedChildren()
-                ->each(fn ($folder) => $folder->restore());
+                ->each(fn($folder) => $folder->restore());
             $item
                 ->trashedFiles()
-                ->each(fn ($files) => $files->restore());
+                ->each(fn($files) => $files->restore());
         });
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests\Domain\Sharing;
 
 use Tests\TestCase;
@@ -189,7 +190,7 @@ class UserShareTest extends TestCase
                 ],
             ])->assertStatus(201);
 
-        Notification::assertTimesSent(2, SharedSendViaEmail::class);
+        Notification::assertSentTimes(2, SharedSendViaEmail::class);
     }
 
     /**
@@ -220,7 +221,7 @@ class UserShareTest extends TestCase
             ],
         ])->assertStatus(200);
 
-        Notification::assertTimesSent(2, SharedSendViaEmail::class);
+        Notification::assertSentTimes(2, SharedSendViaEmail::class);
     }
 
     /**

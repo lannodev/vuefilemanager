@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests\Domain\UploadRequest;
 
 use Storage;
@@ -55,7 +56,7 @@ class UploadRequestTest extends TestCase
             'notes'     => 'Please send me your files...',
         ]);
 
-        Notification::assertTimesSent(1, UploadRequestNotification::class);
+        Notification::assertSentTimes(1, UploadRequestNotification::class);
     }
 
     /**

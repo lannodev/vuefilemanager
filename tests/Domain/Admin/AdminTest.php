@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests\Domain\Admin;
 
 use Storage;
@@ -45,7 +46,7 @@ class AdminTest extends TestCase
             ->create(['role' => 'admin']);
 
         $users->each(
-            fn ($user) =>
+            fn($user) =>
             $this
                 ->actingAs($admin)
                 ->getJson('/api/admin/users?page=1')
@@ -145,7 +146,7 @@ class AdminTest extends TestCase
             ->postJson("/api/admin/users/$user->id/reset-password")
             ->assertStatus(200);
 
-        Notification::assertTimesSent(1, ResetPassword::class);
+        Notification::assertSentTimes(1, ResetPassword::class);
     }
 
     /**
@@ -243,7 +244,7 @@ class AdminTest extends TestCase
 
         collect(config('vuefilemanager.avatar_sizes'))
             ->each(
-                fn ($size) =>
+                fn($size) =>
                 Storage::disk('local')
                     ->assertExists("avatars/{$size['name']}-{$avatar}")
             );
