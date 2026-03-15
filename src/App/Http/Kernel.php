@@ -1,7 +1,8 @@
 <?php
+
 namespace App\Http;
 
-use Fruitcake\Cors\HandleCors;
+use Illuminate\Http\Middleware\HandleCors;
 use Support\Middleware\AdminCheck;
 use Support\Middleware\TrimStrings;
 use Support\Middleware\TrustProxies;
