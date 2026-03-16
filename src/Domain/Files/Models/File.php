@@ -1,4 +1,5 @@
 <?php
+
 namespace Domain\Files\Models;
 
 use App\Users\Models\User;
@@ -16,6 +17,7 @@ use Domain\Traffic\Actions\RecordUploadAction;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use TeamTNT\TNTSearch\TNTSearch;
 
 /**
  * @method static whereUserId($user_id)
@@ -197,8 +199,11 @@ class File extends Model
             'UTF-8'
         );
 
-        $trigram = (new TNTIndexer)
-            ->buildTrigrams(implode(', ', [$name]));
+        $tnt = new TNTSearch();
+        $tnt->loadConfig(config('scout.tntsearch'));
+
+        $indexer = new TNTIndexer($tnt->engine);
+        $trigram = $indexer->buildTrigrams(implode(', ', [$name]));
 
         return [
             'id'         => $this->id,

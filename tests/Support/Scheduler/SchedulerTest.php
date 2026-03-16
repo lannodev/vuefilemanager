@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests\Support\Scheduler;
 
 use Storage;
@@ -102,15 +103,20 @@ class SchedulerTest extends TestCase
      */
     public function it_delete_failed_files_older_than_one_day()
     {
-        $this->travel(-26)->hours();
+        Storage::fake('local');
 
         $file = UploadedFile::fake()
             ->create('fake-file.zip', 2000, 'application/zip');
 
         collect(['chunks'])
             ->each(function ($folder) use ($file) {
-                Storage::putFileAs($folder, $file, 'fake-file.zip');
+                Storage::disk('local')->putFileAs($folder, $file, 'fake-file.zip');
             });
+
+        touch(
+            Storage::disk('local')->path('chunks/fake-file.zip'),
+            now()->subHours(26)->timestamp
+        );
 
         resolve(DeleteFailedFilesAction::class)();
 

@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests\Domain\Teams;
 
 use Notification;
@@ -85,7 +86,7 @@ class TeamsTest extends TestCase
                 'email' => 'jane@external.com',
             ]);
 
-        Notification::assertTimesSent(2, InvitationIntoTeamFolder::class);
+        Notification::assertSentTimes(InvitationIntoTeamFolder::class, 2);
     }
 
     /**
@@ -162,7 +163,7 @@ class TeamsTest extends TestCase
             'team_folder' => 1,
         ]);
 
-        Notification::assertTimesSent(2, InvitationIntoTeamFolder::class);
+        Notification::assertSentTimes(InvitationIntoTeamFolder::class, 2);
     }
 
     /**

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Users\Actions;
 
 use App\Users\Models\User;
@@ -14,8 +15,7 @@ class CreateNewUserAction extends Controller
 {
     public function __construct(
         protected AutoSubscribeForMeteredBillingAction $autoSubscribeForMeteredBilling,
-    ) {
-    }
+    ) {}
 
     /**
      * Validate and create a new user.

@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests\App\Users;
 
 use Storage;
@@ -62,7 +63,7 @@ class SignFlowTest extends TestCase
         Storage::disk('local')
             ->assertExists('files/' . User::first()->id);
 
-        Notification::assertTimesSent(1, VerifyEmail::class);
+        Notification::assertSentTimes(VerifyEmail::class, 1);
     }
 
     /**
@@ -313,7 +314,7 @@ class SignFlowTest extends TestCase
             'email' => $user->email,
         ])->assertStatus(200);
 
-        Notification::assertTimesSent(1, ResetPassword::class);
+        Notification::assertSentTimes(ResetPassword::class, 1);
     }
 
     /**

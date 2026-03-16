@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests;
 
 use DB;
@@ -8,6 +9,7 @@ use Illuminate\Support\Facades\Notification;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Domain\SetupWizard\Actions\CreateDiskDirectoriesAction;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Illuminate\Routing\Middleware\ThrottleRequests;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -29,6 +31,8 @@ abstract class TestCase extends BaseTestCase
         $this->storeDefaultSettings();
 
         //$this->withoutExceptionHandling();
+
+        $this->withoutMiddleware(ThrottleRequests::class);
     }
 
     public function storeDefaultSettings()

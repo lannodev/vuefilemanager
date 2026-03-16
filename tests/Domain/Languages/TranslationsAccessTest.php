@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests\Domain\Languages;
 
 use Tests\TestCase;
@@ -49,6 +50,8 @@ class TranslationsAccessTest extends TestCase
                 'value' => 'Hi, my name is :name :surname',
                 'lang'  => 'en',
             ]);
+
+        cache()->forget('language-translations-en');
 
         $this->assertEquals(
             'Close',
